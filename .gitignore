@@ -1,0 +1,14 @@
+.DS_Store
+
+# dependencies
+node_modules/
+
+# Cypress artifacts
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# environment files
+cypress.env.json
+.env
+.env.*
