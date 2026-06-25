@@ -4,7 +4,8 @@ describe('login', () => {
         
     cy.login()
 
-    cy.url().should('contain', 'http://localhost/')
+    cy.get('[data-qa-selector="welcome_title_content"]').should('be.visible')
 
   })
 })
+
