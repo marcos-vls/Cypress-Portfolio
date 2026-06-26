@@ -21,3 +21,13 @@ Cypress.Commands.add('logout', () => {
     cy.get('[data-qa-selector="sign_out_link"]').click()
 
 })
+
+Cypress.Commands.add('gui_createProject',(project) => {
+    cy.visit('/projects/new')
+    
+    cy.get('#project_name').type(project.name)
+    cy.get('#project_description').type(project.description)
+    cy.get('#project_initialize_with_readme').check()
+    cy.contains('Create project').click()
+})
+
