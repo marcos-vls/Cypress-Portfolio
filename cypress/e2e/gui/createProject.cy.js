@@ -16,7 +16,7 @@ describe('Create Project', () => {
         cy.url().should('be.equal', `${Cypress.config('baseUrl')}/${Cypress.env('user_name')}/${project.name}`)
         cy.contains(project.name).should('be.visible')
         cy.contains(project.description).should('be.visible')
-
+        cy.contains('was successfully created').should('be.visible')
     })
 
 })

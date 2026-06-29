@@ -31,3 +31,7 @@ Cypress.Commands.add('gui_createProject',(project) => {
     cy.contains('Create project').click()
 })
 
+Cypress.Commands.add('gui.deleteProject', () => {
+    cy.visit('/projects/new')
+
+})
