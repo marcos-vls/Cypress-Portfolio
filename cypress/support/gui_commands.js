@@ -1,19 +1,32 @@
 Cypress.Commands.add('login', (
-    user = Cypress.env('user_name'),
-    password = Cypress.env('user_password')
-
+  user = Cypress.env('user_name'),
+  password = Cypress.env('user_password'),
+  { cacheSession = true } = {},
 ) => {
-    const login = () => {
-        cy.visit('/users/sign_in')
+  const login = () => {
+    cy.visit('/users/sign_in')
 
-        cy.get('[data-qa-selector="login_field"]').type(user)
-        cy.get('[data-qa-selector="password_field"]').type(password)
-        cy.get('[data-qa-selector="sign_in_button"]').click()
+    cy.get("[data-qa-selector='login_field']").type(user)
+    cy.get("[data-qa-selector='password_field']").type(password, { log: false })
+    cy.get("[data-qa-selector='sign_in_button']").click()
+  }
 
-    }
-   
+  const validate = () => {
+    cy.visit('/')
+    cy.location('pathname', { timeout: 1000 })
+      .should('not.eq', '/users/sign_in')
+  }
+
+  const options = {
+    cacheAcrossSpecs: true,
+    validate,
+  }
+
+  if (cacheSession) {
+    cy.session(['gui-login', user], login, options)
+  } else {
     login()
-
+  }
 })
 
 Cypress.Commands.add('logout', () => {
@@ -31,7 +44,20 @@ Cypress.Commands.add('gui_createProject',(project) => {
     cy.contains('Create project').click()
 })
 
-Cypress.Commands.add('gui.deleteProject', () => {
-    cy.visit('/projects/new')
+Cypress.Commands.add('gui_deleteProject', () => {
+    cy.visit('/projects')
+
+    cy.get(':nth-child(1) > .avatar-container > .project > .avatar').click()
+    cy.get('a.shortcuts-tree[href$="/edit"]').click()
+    cy.get('#js-project-advanced-settings > .settings-header > .settings-title').click()
+    cy.get(':nth-child(6) > form > .btn').click()
+    // Pega o texto do <code> e digita no input
+    cy.get('.js-confirm-danger-match')
+        .invoke('text')
+        .then((texto) => {
+            cy.get('#confirm_name_input')
+            .type(texto)
+          })
+    cy.get('.qa-confirm-button').click()
 
 })
