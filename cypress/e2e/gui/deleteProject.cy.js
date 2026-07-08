@@ -1,13 +1,14 @@
 describe('Delete Project', () => {
     beforeEach(() =>{
-        cy.login()
+      cy.login()
 
     })
+    
     it('Deve excluir o projeto com sucesso.', () => {
-  
-       cy.gui_deleteProject()
+      cy.gui_deleteProject()
         
-       cy.contains('is in the process of being deleted.').should('be.visible')
+      cy.contains('is in the process of being deleted.')
+        .should('be.visible')
 
     })
 

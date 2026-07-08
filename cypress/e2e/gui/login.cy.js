@@ -7,7 +7,9 @@ describe('Login', () => {
 
     cy.login(user, password, options)
 
-    cy.get('.qa-user-avatar').should('be.visible')
+    cy.get('.qa-user-avatar')
+      .should('be.visible')
   })
+  
 })
 
