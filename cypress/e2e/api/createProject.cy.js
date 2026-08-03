@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker'
 
-describe('Create Project', () => {  
-    it('Deve criar um project no gitlab com sucesso', () => {
+describe('Create Project', () => {
+  beforeEach(() => cy.api_deleteProjects())
+  
+  it('Deve criar um project no gitlab com sucesso', () => {
       const project = {
         name: `Project-${faker.datatype.uuid()}`,
         description: faker.random.words(5)
